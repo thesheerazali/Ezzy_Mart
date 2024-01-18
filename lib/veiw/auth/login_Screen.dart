@@ -68,7 +68,6 @@ class LoginScreen extends StatelessWidget {
                                         .loginMethod(context: context)
                                         .then((value) {
                                       if (value != null) {
-                                        Get.snackbar("Login", "Successfully");
                                         Get.offAll(() => const Home());
                                       } else {
                                         controller.isLoading(false);

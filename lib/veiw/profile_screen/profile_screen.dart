@@ -8,6 +8,7 @@ import 'package:my_mart/controllers/auth_controller.dart';
 import 'package:my_mart/controllers/profile_controller.dart';
 import 'package:my_mart/services/firestore_services.dart';
 import 'package:my_mart/veiw/auth/login_Screen.dart';
+import 'package:my_mart/veiw/auth/signup_screen.dart';
 import 'package:my_mart/veiw/profile_screen/components/detail_cards.dart';
 import 'package:my_mart/veiw/profile_screen/edit_profile_screen.dart';
 
@@ -43,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
                     color: whiteColor,
                   ),
                 ).onTap(() {
-                  Get.to(() => const EditProfileScreen());
+                  Get.to(() => EditProfileScreen(data: data));
                 }),
               ),
 
@@ -52,11 +53,19 @@ class ProfileScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Row(
                   children: [
-                    Image.asset(imgProfile2, width: 100, fit: BoxFit.cover)
-                        .box
-                        .roundedFull
-                        .clip(Clip.antiAlias)
-                        .make(),
+                    data['imageUrl'] == ''
+                        ? Image.asset(imgProfile2,
+                                width: 100, fit: BoxFit.cover)
+                            .box
+                            .roundedFull
+                            .clip(Clip.antiAlias)
+                            .make()
+                        : Image.network(data['imageUrl'],
+                                width: 80, fit: BoxFit.cover)
+                            .box
+                            .roundedFull
+                            .clip(Clip.antiAlias)
+                            .make(),
                     10.widthBox,
                     Expanded(
                         child: Column(
@@ -74,9 +83,9 @@ class ProfileScreen extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: whiteColor)),
                         onPressed: () async {
+                          Get.offAll(() => const LoginScreen());
                           await Get.put(AuthController())
                               .signOutMethod(context: context);
-                          Get.offAll(() => const LoginScreen());
                         },
                         child: "logout".text.fontFamily(semibold).white.make())
                   ],
@@ -88,9 +97,10 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  detailCard(count: "00".toString(), title: "In Your Cart"),
-                  detailCard(count: "647".toString(), title: "Your Orders"),
-                  detailCard(count: "32".toString(), title: "In Your Wishlish")
+                  detailCard(count: data['cart_count'], title: "In Your Cart"),
+                  detailCard(count: data['order_count'], title: "Your Orders"),
+                  detailCard(
+                      count: data['wishlist_count'], title: "In Your Wishlish")
                 ],
               ),
 

@@ -60,7 +60,7 @@ class AuthController extends GetxController {
 
   signOutMethod({context}) async {
     try {
-      await auth.signOut();
+      await auth.signOut().then((value) => debugPrint("signoup suucefylyy"));
     } catch (e) {
       VxToast.show(context, msg: e.toString());
     }
