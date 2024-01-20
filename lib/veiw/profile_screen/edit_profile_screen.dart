@@ -5,7 +5,6 @@ import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/Common_Widgets/custom_textField.dart';
 import 'package:my_mart/Common_Widgets/out_button.dart';
 import 'package:my_mart/consts/consts.dart';
-import 'package:my_mart/consts/firebase_const.dart';
 import 'package:my_mart/controllers/profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -14,7 +13,7 @@ class EditProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.find<ProfileController>();
+    var controller = Get.put(ProfileController());
     controller.nameController.text = data['name'];
 
     return bgWidget(

@@ -28,9 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final user = auth.currentUser;
 
     if (user != null) {
-      Timer(const Duration(seconds: 3), () => Get.offAll(() => Home()));
+      Timer(const Duration(seconds: 3), () => Get.offAll(() => const Home()));
     } else {
-      Timer(const Duration(seconds: 3), () => Get.offAll(() => LoginScreen()));
+      Timer(const Duration(seconds: 3), () => Get.offAll(() => const LoginScreen()));
     }
   }
 

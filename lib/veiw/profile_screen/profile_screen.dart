@@ -4,11 +4,8 @@ import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/firebase_const.dart';
 import 'package:my_mart/consts/list.dart';
-import 'package:my_mart/controllers/auth_controller.dart';
-import 'package:my_mart/controllers/profile_controller.dart';
 import 'package:my_mart/services/firestore_services.dart';
 import 'package:my_mart/veiw/auth/login_Screen.dart';
-import 'package:my_mart/veiw/auth/signup_screen.dart';
 import 'package:my_mart/veiw/profile_screen/components/detail_cards.dart';
 import 'package:my_mart/veiw/profile_screen/edit_profile_screen.dart';
 
@@ -19,12 +16,11 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(ProfileController());
     return bgWidget(
         child: Scaffold(
             body: StreamBuilder(
       stream: FireStoreServices.getUserData(currentUser!.uid),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
           return const Center(
             child: CircularProgressIndicator(

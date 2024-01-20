@@ -43,6 +43,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     VxSwiper.builder(
                         aspectRatio: 16 / 9,
+                        viewportFraction: 1.0,
                         autoPlay: true,
                         height: context.screenHeight * .19,
                         enlargeCenterPage: true,
@@ -74,6 +75,7 @@ class HomeScreen extends StatelessWidget {
                     10.heightBox,
                     VxSwiper.builder(
                         aspectRatio: 16 / 9,
+                        viewportFraction: 1.0,
                         autoPlay: true,
                         height: context.screenHeight * .18,
                         enlargeCenterPage: true,
@@ -197,6 +199,7 @@ class HomeScreen extends StatelessWidget {
                     20.heightBox,
                     VxSwiper.builder(
                         aspectRatio: 16 / 9,
+                        viewportFraction: 1.0,
                         autoPlay: true,
                         height: context.screenHeight * .18,
                         enlargeCenterPage: true,
