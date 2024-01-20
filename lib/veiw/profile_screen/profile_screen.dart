@@ -12,6 +12,8 @@ import 'package:my_mart/veiw/auth/signup_screen.dart';
 import 'package:my_mart/veiw/profile_screen/components/detail_cards.dart';
 import 'package:my_mart/veiw/profile_screen/edit_profile_screen.dart';
 
+import '../../utils/toast_message.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -83,9 +85,18 @@ class ProfileScreen extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: whiteColor)),
                         onPressed: () async {
-                          Get.offAll(() => const LoginScreen());
-                          await Get.put(AuthController())
-                              .signOutMethod(context: context);
+                          auth.signOut().then((value) {
+                            Get.offAll(() => const LoginScreen());
+                            Get.snackbar("LOGOUT", "Successfully",
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor:
+                                    Colors.greenAccent.withOpacity(0.7));
+                          }).onError((error, stackTrace) {
+                            ToastMessage.toastMessage(error.toString());
+                          });
+                          // Get.offAll(() => const LoginScreen());
+                          // // await Get.put(AuthController())
+                          // //     .signOutMethod(context: context);
                         },
                         child: "logout".text.fontFamily(semibold).white.make())
                   ],

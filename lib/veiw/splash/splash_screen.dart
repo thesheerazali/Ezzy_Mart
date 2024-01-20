@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_mart/Common_Widgets/appLogo_widget.dart';
 import 'package:my_mart/consts/consts.dart';
@@ -15,23 +17,21 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  changeScreen() {
-    Future.delayed(const Duration(seconds: 3), () {
-      // Get.to(() => const LoginScreen());
-      auth.authStateChanges().listen((User? user) {
-        if (user == null && mounted) {
-          Get.off(() => const LoginScreen());
-        } else {
-          Get.off(() => const Home());
-        }
-      });
-    });
-  }
-
   @override
   void initState() {
-    changeScreen();
+    isUserLogin();
     super.initState();
+  }
+
+  void isUserLogin() {
+    final auth = FirebaseAuth.instance;
+    final user = auth.currentUser;
+
+    if (user != null) {
+      Timer(const Duration(seconds: 3), () => Get.offAll(() => Home()));
+    } else {
+      Timer(const Duration(seconds: 3), () => Get.offAll(() => LoginScreen()));
+    }
   }
 
   @override

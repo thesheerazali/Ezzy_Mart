@@ -44,6 +44,7 @@ dependencies:
   provider: ^6.1.1
   image_picker: ^1.0.7
   path: ^1.8.3
+  fluttertoast: ^8.2.4
   
 
 dev_dependencies:
@@ -72,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - lib\services\category_model.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
