@@ -13,7 +13,7 @@ const featuredTitle1 = ["Women Dresses", "Girls Dresses", "Girls Watches"];
 const featuredTitle2 = ["Boys Dresses", "Mobile Phones", "T-Shirts"];
 
 const categoriesTitleList = [
-  "Women Clothing",
+  "Women Dress",
   "Men Clothing & Fashion",
   "Computer & Accesories",
   "Automobile",
@@ -25,14 +25,14 @@ const categoriesTitleList = [
 ];
 
 const categoriesImgList = [
+  imgS10,
   imgFc1,
   imgFc2,
   imgFc3,
   imgFc4,
   imgFc5,
-  imgFc6,
   imgFc7,
-  imgFc8,
+  imgFc6,
   imgFc9
 ];
 

@@ -1,5 +1,6 @@
 import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/consts/consts.dart';
+import 'package:my_mart/controllers/products_controller.dart';
 import 'package:my_mart/veiw/category_screen/item_detail.dart';
 
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class CategoryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<ProductController>();
     return bgWidget(
         child: Scaffold(
       appBar: AppBar(
@@ -17,14 +19,15 @@ class CategoryDetails extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(12),
-        child: Column(children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
             child: Row(
               children: List.generate(
-                  6,
-                  (index) => "Baby Clothing"
+                  controller.subcat.length,
+                  (index) => controller.subcat[index]
+                      .toString()
                       .text
                       .fontFamily(bold)
                       .color(darkFontGrey)

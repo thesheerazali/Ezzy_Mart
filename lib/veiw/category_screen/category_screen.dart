@@ -1,6 +1,7 @@
 import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/list.dart';
+import 'package:my_mart/controllers/products_controller.dart';
 import 'package:my_mart/veiw/category_screen/category_details.dart';
 
 import 'package:get/get.dart';
@@ -10,10 +11,11 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.put(ProductController());
     return bgWidget(
         child: Scaffold(
             appBar: AppBar(
-              title: "Category".text.make(),
+              title: "Category".text.white.make(),
             ),
             body: Container(
               padding: const EdgeInsets.all(12),
@@ -42,10 +44,12 @@ class CategoryScreen extends StatelessWidget {
                         .white
                         .rounded
                         .clip(Clip.antiAlias)
+                        .padding(EdgeInsets.symmetric(horizontal: 4))
                         .outerShadow
                         .make()
                         .onTap(() {
-                      Get.to(
+                      controller.getSubCategories(categoriesTitleList[index]);
+                      Get.to(() =>
                           CategoryDetails(title: categoriesTitleList[index]));
                     });
                   }),
