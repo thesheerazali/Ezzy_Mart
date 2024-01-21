@@ -99,6 +99,7 @@ class SignUpScreen extends StatelessWidget {
                               valueColor: AlwaysStoppedAnimation(redColor),
                             )
                           : ourButton(
+                                  radiusValue: 10.0,
                                   color: controller.isCheck.value == true
                                       ? redColor
                                       : lightGrey,

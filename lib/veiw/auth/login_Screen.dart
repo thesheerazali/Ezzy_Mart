@@ -61,6 +61,7 @@ class LoginScreen extends StatelessWidget {
                               valueColor: AlwaysStoppedAnimation(redColor),
                             )
                           : ourButton(
+                                  radiusValue: 10.0,
                                   color: redColor,
                                   onPress: () async {
                                     controller.isLoading(true);
@@ -87,6 +88,7 @@ class LoginScreen extends StatelessWidget {
                       5.heightBox,
 
                       ourButton(
+                              radiusValue: 10.0,
                               color: lightGolden,
                               onPress: () {
                                 Get.to(() => SignUpScreen());
