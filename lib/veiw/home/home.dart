@@ -24,10 +24,10 @@ class Home extends StatelessWidget {
     ];
 
     var navBody = [
-     HomeScreen(),
-     CategoryScreen(),
-     CartScreen(),
-     ProfileScreen(),
+      const HomeScreen(),
+      const CategoryScreen(),
+      const CartScreen(),
+      const ProfileScreen(),
     ];
     return Scaffold(
       body: Column(

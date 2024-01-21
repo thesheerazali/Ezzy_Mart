@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.center,
-              height: 60,
+              // height: 60,
               color: lightGrey,
               child: TextFormField(
                 decoration: const InputDecoration(
