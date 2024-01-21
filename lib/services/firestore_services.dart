@@ -12,6 +12,18 @@ class FireStoreServices {
   static getProducts(category) {
     return firestore
         .collection(productsCollection)
-        .where('p_category', isEqualTo: category).snapshots();
+        .where('p_category', isEqualTo: category)
+        .snapshots();
+  }
+
+  static getCart(uid) {
+    return firestore
+        .collection(cartCllection)
+        .where('added_by', isEqualTo: uid)
+        .snapshots();
+  }
+
+  static deleteDoc(docId) {
+    return firestore.collection(cartCllection).doc(docId).delete();
   }
 }
