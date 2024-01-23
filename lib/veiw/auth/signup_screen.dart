@@ -113,8 +113,8 @@ class SignUpScreen extends StatelessWidget {
                                                 email: emailController.text,
                                                 password:
                                                     passwordController.text)
-                                            .then((value) {
-                                          return controller.storeUserData(
+                                            .then((value) async {
+                                          return await controller.storeUserData(
                                               email: emailController.text,
                                               name: nameController.text,
                                               password:

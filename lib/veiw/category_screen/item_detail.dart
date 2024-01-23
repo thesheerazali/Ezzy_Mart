@@ -321,17 +321,34 @@ class ItemDetailScreen extends StatelessWidget {
                       radiusValue: 0.0,
                       color: redColor,
                       onPress: () {
-                        controller.addToCart(
-                          color: data['p_colors'][controller.colorIndex.value],
-                          context: context,
-                          img: data['p_imgs'][0],
-                          qty: controller.quantity.value,
-                          sellername: data['p_seller'],
-                          title: data['p_name'],
-                          tprice: controller.totalPrice.value,
-                        );
-                        Get.snackbar("Added", "To Cart successfully ",
-                            snackPosition: SnackPosition.BOTTOM);
+                        if (controller.quantity.value < 1) {
+                          Get.snackbar(
+                              "Add Quantity", "Make sure quantity above 0 ",
+                              colorText: whiteColor,
+                              animationDuration:
+                                  const Duration(milliseconds: 50),
+                              duration: const Duration(seconds: 1),
+                              backgroundColor: Colors.black,
+                              snackPosition: SnackPosition.BOTTOM);
+                        } else {
+                          controller.addToCart(
+                            color: data['p_colors']
+                                [controller.colorIndex.value],
+                            context: context,
+                            img: data['p_imgs'][0],
+                            qty: controller.quantity.value,
+                            sellername: data['p_seller'],
+                            title: data['p_name'],
+                            tprice: controller.totalPrice.value,
+                          );
+                          Get.snackbar("Added", "To Cart successfully ",
+                              colorText: whiteColor,
+                              animationDuration:
+                                  const Duration(milliseconds: 50),
+                              duration: const Duration(seconds: 1),
+                              backgroundColor: Colors.black,
+                              snackPosition: SnackPosition.BOTTOM);
+                        }
                       },
                       textColor: whiteColor,
                       title: "Add to Cart"))
