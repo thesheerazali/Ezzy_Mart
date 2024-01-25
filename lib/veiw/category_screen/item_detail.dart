@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:my_mart/Common_Widgets/out_button.dart';
 import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/list.dart';
+import 'package:my_mart/veiw/chat_screen/chat_screen.dart';
 
 import '../../controllers/products_controller.dart';
 
@@ -118,7 +119,12 @@ class ItemDetailScreen extends StatelessWidget {
                             backgroundColor: whiteColor,
                             child: Icon(Icons.message_rounded,
                                 color: darkFontGrey),
-                          )
+                          ).onTap(() {
+                            Get.to(() => const ChatScreen(), arguments: [
+                              data['p_seller'],
+                              "9sVl0KbR3UdBLUijYZaX3b7Uno43",
+                            ]);
+                          })
                         ],
                       )
                           .box

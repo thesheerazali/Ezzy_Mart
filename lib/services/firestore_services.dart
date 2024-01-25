@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_mart/consts/firebase_const.dart';
+import 'package:my_mart/controllers/chats_controller.dart';
 
 class FireStoreServices {
   //get users data
@@ -40,5 +41,14 @@ class FireStoreServices {
 
   static deleteDoc(docId) {
     return firestore.collection(cartCllection).doc(docId).delete();
+  }
+
+  static getChatmsg(docId) {
+    return firestore
+        .collection(chatCollection)
+        .doc(docId)
+        .collection(messagesCollection)
+        .orderBy('created_on', descending: false)
+        .snapshots();
   }
 }
