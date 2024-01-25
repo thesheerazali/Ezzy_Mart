@@ -21,141 +21,150 @@ class ProfileScreen extends StatelessWidget {
     var controller = Get.put(ProfileController());
     return bgWidget(
         child: Scaffold(
-            body: Obx(
-      () => controller.userData.value != null
-          ? SafeArea(
-              child: Column(children: [
-                //Edit Profile
-
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.edit,
-                      color: whiteColor,
-                    ),
-                  ).onTap(() {
-                    Get.to(() =>
-                        EditProfileScreen(data: controller.userData.value));
-                  }),
-                ),
-
-                //User Detail section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    children: [
-                      controller.userData.value!.img == ''
-                          ? Image.asset(imgProfile2,
-                                  width: 100, fit: BoxFit.cover)
-                              .box
-                              .roundedFull
-                              .clip(Clip.antiAlias)
-                              .make()
-                          : Image.network(controller.userData.value!.img,
-                                  width: 80, fit: BoxFit.cover)
-                              .box
-                              .roundedFull
-                              .clip(Clip.antiAlias)
-                              .make(),
-                      10.widthBox,
-                      Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          controller.userData.value!.name.text
-                              .fontFamily(semibold)
-                              .white
-                              .make(),
-                          controller.userData.value!.email.text.white.make()
-                        ],
-                      )),
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: whiteColor),
-                        ),
-                        onPressed: () async {
-                          try {
-                            // Set auth state persistence to NONE before sign-out.
-                            await auth.setPersistence(Persistence.NONE);
-                            await auth.signOut();
-
-                            // Wait for the sign-out operation to complete before navigating.
-                            await Get.offAll(() => const LoginScreen());
-
-                            // Show a success message.
-                            Get.snackbar(
-                              "LOGOUT",
-                              "Successfully",
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor:
-                                  Colors.greenAccent.withOpacity(0.7),
-                            );
-                          } catch (error) {
-                            // Handle errors during sign-out.
-                            ToastMessage.toastMessage(error.toString());
-                          }
-                        },
-                        child: "logout".text.fontFamily(semibold).white.make(),
+            body: StreamBuilder(
+                stream: FireStoreServices.getUserData(currentUser!.uid),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation(redColor),
                       ),
-                    ],
-                  ),
-                ),
+                    );
+                  } else {
+                    var data = snapshot.data!.docs[0];
+                    return SafeArea(
+                      child: Column(children: [
+                        //Edit Profile
 
-                20.heightBox,
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    detailCard(
-                        count: controller.userData.value!.cartCount,
-                        title: "In Your Cart"),
-                    detailCard(
-                        count: controller.userData.value!.orderCount,
-                        title: "Your Orders"),
-                    detailCard(
-                        count: controller.userData.value!.wishListCount,
-                        title: "In Your Wishlish")
-                  ],
-                ),
-
-                //Button Sections
-
-                ListView.separated(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: profileButtonTitle[index]
-                                .text
-                                .fontFamily(semibold)
-                                .color(darkFontGrey)
-                                .make(),
-                            leading: Image.asset(
-                              profileButtonIcons[index],
-                              width: 22,
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Align(
+                            alignment: Alignment.topRight,
+                            child: Icon(
+                              Icons.edit,
+                              color: whiteColor,
                             ),
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const Divider(color: lightGrey);
-                        },
-                        itemCount: profileButtonTitle.length)
-                    .box
-                    .white
-                    .rounded
-                    .margin(const EdgeInsets.all(12))
-                    .shadowSm
-                    .padding(const EdgeInsets.symmetric(horizontal: 16))
-                    .make()
-                    .box
-                    .color(redColor)
-                    .make()
-              ]),
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
-    )));
+                          ).onTap(() {
+                            Get.to(() => EditProfileScreen(data: data));
+                          }),
+                        ),
+
+                        //User Detail section
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              data['imageUrl'] == ''
+                                  ? Image.asset(imgProfile2,
+                                          width: 100, fit: BoxFit.cover)
+                                      .box
+                                      .roundedFull
+                                      .clip(Clip.antiAlias)
+                                      .make()
+                                  : Image.network(data['imageUrl'],
+                                          width: 80, fit: BoxFit.cover)
+                                      .box
+                                      .roundedFull
+                                      .clip(Clip.antiAlias)
+                                      .make(),
+                              10.widthBox,
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  "${data['name']}"
+                                      .text
+                                      .fontFamily(semibold)
+                                      .white
+                                      .make(),
+                                  "${data['email']}".text.white.make()
+                                ],
+                              )),
+                              OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(color: whiteColor),
+                                ),
+                                onPressed: () async {
+                                  try {
+                                    await auth.signOut();
+
+                                    // Wait for the sign-out operation to complete before navigating.
+                                    await Get.offAll(() => const LoginScreen());
+
+                                    // Show a success message.
+                                    Get.snackbar(
+                                      "LOGOUT",
+                                      "Successfully",
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor:
+                                          Colors.greenAccent.withOpacity(0.7),
+                                    );
+                                  } catch (error) {
+                                    // Handle errors during sign-out.
+                                    ToastMessage.toastMessage(error.toString());
+                                  }
+                                },
+                                child: "logout"
+                                    .text
+                                    .fontFamily(semibold)
+                                    .white
+                                    .make(),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        20.heightBox,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            detailCard(
+                                count: "${data['cart_count']}",
+                                title: "In Your Cart"),
+                            detailCard(
+                                count: "${data['order_count']}",
+                                title: "Your Orders"),
+                            detailCard(
+                                count: "${data['wishlist_count']}",
+                                title: "In Your Wishlish")
+                          ],
+                        ),
+
+                        //Button Sections
+
+                        ListView.separated(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: profileButtonTitle[index]
+                                        .text
+                                        .fontFamily(semibold)
+                                        .color(darkFontGrey)
+                                        .make(),
+                                    leading: Image.asset(
+                                      profileButtonIcons[index],
+                                      width: 22,
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const Divider(color: lightGrey);
+                                },
+                                itemCount: profileButtonTitle.length)
+                            .box
+                            .white
+                            .rounded
+                            .margin(const EdgeInsets.all(12))
+                            .shadowSm
+                            .padding(const EdgeInsets.symmetric(horizontal: 16))
+                            .make()
+                            .box
+                            .color(redColor)
+                            .make()
+                      ]),
+                    );
+                  }
+                })));
   }
 }

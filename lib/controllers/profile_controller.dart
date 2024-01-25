@@ -10,8 +10,6 @@ import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/firebase_const.dart';
 import 'package:path/path.dart';
 
-import '../services/user_model.dart';
-
 class ProfileController extends GetxController {
   var profileImgPath = ''.obs;
 
@@ -20,35 +18,34 @@ class ProfileController extends GetxController {
   var newPassController = TextEditingController();
   var profileImgLink = "";
   RxBool isloading = false.obs;
-  User? user;
-  Rx<UserProfile?> userData = Rx<UserProfile?>(null);
-  @override
-  void onInit() {
-    super.onInit();
-    loadUserData();
-  }
+  // User? user;
+  // Rx<UserProfile?> userData = Rx<UserProfile?>(null);
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   loadUserData();
+  // }
+  // Future<void> loadUserData() async {
+  //   try {
+  //     user = currentUser;
 
-  Future<void> loadUserData() async {
-    try {
-      user = currentUser;
+  //     if (user != null) {
+  //       final userDoc = await firestore
+  //           .collection(usersCollection)
+  //           .doc(currentUser!.uid)
+  //           .get();
+  //       final _userData = userDoc.data();
 
-      if (user != null) {
-        final userDoc = await firestore
-            .collection(usersCollection)
-            .doc(currentUser!.uid)
-            .get();
-        final _userData = userDoc.data();
-
-        if (_userData != null) {
-          userData.value = UserProfile.fromFirestore(_userData);
-        } else {
-          debugPrint('User data is null.');
-        }
-      }
-    } catch (error) {
-      debugPrint('Error loading data from Firebase: $error');
-    }
-  }
+  //       if (_userData != null) {
+  //         userData.value = UserProfile.fromFirestore(_userData);
+  //       } else {
+  //         debugPrint('User data is null.');
+  //       }
+  //     }
+  //   } catch (error) {
+  //     debugPrint('Error loading data from Firebase: $error');
+  //   }
+  // }
 
   changeProfileImage(context) async {
     try {

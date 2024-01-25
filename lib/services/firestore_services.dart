@@ -3,19 +3,25 @@ import 'package:my_mart/consts/firebase_const.dart';
 
 class FireStoreServices {
   //get users data
-  static Future<DocumentSnapshot?> getUserData(uid) async {
-    try {
-      var snapshot = await firestore
-          .collection(usersCollection)
-          .doc(
-              uid) // Assuming 'id' is the document ID, use .doc(uid) instead of .where('id', isEqualTo: uid)
-          .get();
-      return snapshot;
-    } catch (e) {
-      // Handle any errors here
-      print("Error fetching user data: $e");
-      return null;
-    }
+  // static Future<DocumentSnapshot?> getUserData(uid) async {
+  //   try {
+  //     var snapshot = await firestore
+  //         .collection(usersCollection)
+  //         .doc(
+  //             uid) // Assuming 'id' is the document ID, use .doc(uid) instead of .where('id', isEqualTo: uid)
+  //         .get();
+  //     return snapshot;
+  //   } catch (e) {
+  //     // Handle any errors here
+  //     print("Error fetching user data: $e");
+  //     return null;
+  //   }
+  // }
+  static getUserData(uid) {
+    return firestore
+        .collection(usersCollection)
+        .where('id', isEqualTo: uid)
+        .snapshots();
   }
 
   static getProducts(category) {

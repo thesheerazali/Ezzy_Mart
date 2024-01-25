@@ -19,18 +19,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    isUserLogin();
+    checkUserAuthentication();
     super.initState();
   }
 
-  void isUserLogin() {
-    final auth = FirebaseAuth.instance;
-    final user = auth.currentUser;
+  Future<void> checkUserAuthentication() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulating a splash screen delay
 
     if (user != null) {
-      Timer(const Duration(seconds: 3), () => Get.offAll(() => const Home()));
+      // User is already signed in, navigate to the home page
+      Get.off(() => const Home());
     } else {
-      Timer(const Duration(seconds: 3), () => Get.offAll(() => const LoginScreen()));
+      // User is not signed in, navigate to the login page
+      Get.off(() => const LoginScreen());
     }
   }
 

@@ -18,6 +18,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AuthController());
+
     return bgWidget(
         child: Scaffold(
             resizeToAvoidBottomInset: false,
