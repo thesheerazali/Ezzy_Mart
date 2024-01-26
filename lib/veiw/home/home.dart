@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/controllers/home_controller.dart';
 import 'package:my_mart/veiw/cart_screen/cart_screen.dart';
@@ -29,26 +30,57 @@ class Home extends StatelessWidget {
       const CartScreen(),
       const ProfileScreen(),
     ];
-    return Scaffold(
-      body: Column(
-        children: [
-          Obx(() => Expanded(
-              child: navBody.elementAt(controller.currentNavIndex.value))),
-        ],
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: controller.currentNavIndex.value,
-          selectedItemColor: redColor,
-          selectedLabelStyle: const TextStyle(fontFamily: bold),
-          items: navBar,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: whiteColor,
-          onTap: (value) {
-            controller.currentNavIndex.value = value;
-          },
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didpop) async {
+        if (controller.currentNavIndex.value != 0) {
+          controller.currentNavIndex.value = 0;
+        } else if (!didpop) {
+          showExitConfirmationDialog(context);
+        }
+      },
+      child: Scaffold(
+        body: Column(
+          children: [
+            Obx(() => Expanded(
+                child: navBody.elementAt(controller.currentNavIndex.value))),
+          ],
+        ),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            currentIndex: controller.currentNavIndex.value,
+            selectedItemColor: redColor,
+            selectedLabelStyle: const TextStyle(fontFamily: bold),
+            items: navBar,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: whiteColor,
+            onTap: (value) {
+              controller.currentNavIndex.value = value;
+            },
+          ),
         ),
       ),
     );
+  }
+
+  Future<bool> showExitConfirmationDialog(BuildContext context) async {
+    return await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Exit Confirmation"),
+            content: Text("Are you sure you want to exit the application?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text("No"),
+              ),
+              TextButton(
+                onPressed: () => SystemNavigator.pop(),
+                child: Text("Yes"),
+              ),
+            ],
+          ),
+        ) ??
+        false;
   }
 }

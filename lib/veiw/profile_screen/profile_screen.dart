@@ -7,8 +7,11 @@ import 'package:my_mart/consts/firebase_const.dart';
 import 'package:my_mart/consts/list.dart';
 import 'package:my_mart/services/firestore_services.dart';
 import 'package:my_mart/veiw/auth/login_Screen.dart';
+import 'package:my_mart/veiw/messages_screen.dart/messages_screen.dart';
+import 'package:my_mart/veiw/orders_screen/orders_screen.dart';
 import 'package:my_mart/veiw/profile_screen/components/detail_cards.dart';
 import 'package:my_mart/veiw/profile_screen/edit_profile_screen.dart';
+import 'package:my_mart/veiw/wishlist_screen/wishlist_screen.dart';
 
 import '../../controllers/profile_controller.dart';
 import '../../utils/toast_message.dart';
@@ -86,19 +89,21 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 onPressed: () async {
                                   try {
-                                    await auth.signOut();
+                                    auth.signOut().then((value) {
+                                      Get.offAll(() => const LoginScreen());
+                                      Get.delete();
+
+                                      // Show a success message.
+                                      Get.snackbar(
+                                        "LOGOUT",
+                                        "Successfully",
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor:
+                                            Colors.greenAccent.withOpacity(0.7),
+                                      );
+                                    });
 
                                     // Wait for the sign-out operation to complete before navigating.
-                                    await Get.offAll(() => const LoginScreen());
-
-                                    // Show a success message.
-                                    Get.snackbar(
-                                      "LOGOUT",
-                                      "Successfully",
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor:
-                                          Colors.greenAccent.withOpacity(0.7),
-                                    );
                                   } catch (error) {
                                     // Handle errors during sign-out.
                                     ToastMessage.toastMessage(error.toString());
@@ -134,6 +139,7 @@ class ProfileScreen extends StatelessWidget {
                         //Button Sections
 
                         ListView.separated(
+                                physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return ListTile(
@@ -146,6 +152,22 @@ class ProfileScreen extends StatelessWidget {
                                       profileButtonIcons[index],
                                       width: 22,
                                     ),
+                                    onTap: () {
+                                      switch (index) {
+                                        case 0:
+                                          Get.to(() => const OrdersScreen());
+
+                                          break;
+                                        case 1:
+                                          Get.to(() => const WishListScreen());
+
+                                          break;
+                                        case 2:
+                                          Get.to(() => const MessagesScreen());
+
+                                          break;
+                                      }
+                                    },
                                   );
                                 },
                                 separatorBuilder: (context, index) {

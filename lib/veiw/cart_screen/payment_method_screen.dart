@@ -49,57 +49,61 @@ class PaymntMethodScreen extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Obx(
-              () => Column(
-                children: List.generate(paymentMethodListImg.length, (index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      paymentMethodListTitle[index]
-                          .text
-                          .fontFamily(bold)
-                          .size(22)
-                          .make(),
-                      10.heightBox,
-                      GestureDetector(
-                        onTap: () => controller.selectPaymentMethod(index),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: controller.paymentIndex.value == index
-                                      ? redColor
-                                      : Colors.transparent,
-                                  width: 4)),
-                          child: Stack(
-                            alignment: Alignment.topRight,
-                            children: [
-                              Image.asset(
-                                paymentMethodListImg[index],
-                                width: double.infinity,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                              controller.paymentIndex.value == index
-                                  ? Transform.scale(
-                                      scale: 1.3,
-                                      child: Checkbox(
-                                          activeColor: Colors.green,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          value: true,
-                                          onChanged: (value) {}),
-                                    )
-                                  : Container(),
-                            ],
+              () => SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  children: List.generate(paymentMethodListImg.length, (index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        paymentMethodListTitle[index]
+                            .text
+                            .fontFamily(bold)
+                            .size(22)
+                            .make(),
+                        10.heightBox,
+                        GestureDetector(
+                          onTap: () => controller.selectPaymentMethod(index),
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 10),
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color:
+                                        controller.paymentIndex.value == index
+                                            ? redColor
+                                            : Colors.transparent,
+                                    width: 4)),
+                            child: Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                Image.asset(
+                                  paymentMethodListImg[index],
+                                  width: double.infinity,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                ),
+                                controller.paymentIndex.value == index
+                                    ? Transform.scale(
+                                        scale: 1.3,
+                                        child: Checkbox(
+                                            activeColor: Colors.green,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30)),
+                                            value: true,
+                                            onChanged: (value) {}),
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  );
-                }),
+                      ],
+                    );
+                  }),
+                ),
               ),
             ),
           )),

@@ -9,6 +9,7 @@ class HomeConteroller extends GetxController {
   }
 
   var currentNavIndex = 0.obs;
+  RxBool canPop = false.obs;
 
   var username = "";
 

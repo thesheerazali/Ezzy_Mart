@@ -5,7 +5,7 @@ import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/Common_Widgets/custom_textField.dart';
 import 'package:my_mart/Common_Widgets/out_button.dart';
 import 'package:my_mart/consts/consts.dart';
-import 'package:my_mart/controllers/products_controller.dart';
+
 import 'package:my_mart/controllers/profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
