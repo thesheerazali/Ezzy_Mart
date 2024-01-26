@@ -6,6 +6,7 @@ import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/firebase_const.dart';
 import 'package:my_mart/controllers/cart_controller.dart';
 import 'package:my_mart/services/firestore_services.dart';
+import 'package:my_mart/veiw/cart_screen/shipping_detail_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -14,6 +15,17 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(CartController());
     return Scaffold(
+        bottomNavigationBar: SizedBox(
+          height: 60,
+          child: ourButton(
+              color: redColor,
+              onPress: () {
+                Get.to(() => const ShippingDetailScreen());
+              },
+              radiusValue: 0.0,
+              textColor: whiteColor,
+              title: "Proceed To Shipping"),
+        ),
         backgroundColor: whiteColor,
         appBar: AppBar(
           centerTitle: true,
@@ -101,15 +113,6 @@ class CartScreen extends StatelessWidget {
                         .roundedSM
                         .make(),
                     10.heightBox,
-                    SizedBox(
-                      width: (context.screenWidth - 60),
-                      child: ourButton(
-                          color: redColor,
-                          onPress: () {},
-                          radiusValue: 10.0,
-                          textColor: whiteColor,
-                          title: "Proceed To Shipping"),
-                    )
                   ],
                 ),
               );

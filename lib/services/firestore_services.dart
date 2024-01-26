@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_mart/consts/firebase_const.dart';
-import 'package:my_mart/controllers/chats_controller.dart';
 
 class FireStoreServices {
   //get users data
