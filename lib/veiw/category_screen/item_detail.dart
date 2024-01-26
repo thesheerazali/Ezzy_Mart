@@ -31,9 +31,20 @@ class ItemDetailScreen extends StatelessWidget {
             title: title.text.color(darkFontGrey).fontFamily(bold).make(),
             actions: [
               IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
-              IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.favorite_border_outlined)),
+              Obx(
+                () => IconButton(
+                    onPressed: () {
+                      if (controller.isFav.value) {
+                        controller.removeFromWishList(data.id, context);
+                      } else {
+                        controller.addToWishList(data.id, context);
+                      }
+                    },
+                    icon: Icon(
+                      Icons.favorite_outlined,
+                      color: controller.isFav.value ? redColor : darkFontGrey,
+                    )),
+              ),
             ],
           ),
           body: Column(
@@ -119,10 +130,10 @@ class ItemDetailScreen extends StatelessWidget {
                             backgroundColor: whiteColor,
                             child: Icon(Icons.message_rounded,
                                 color: darkFontGrey),
-                          ).onTap(() {
+                          ).onTap(() async {
                             Get.to(() => const ChatScreen(), arguments: [
                               data['p_seller'],
-                              "9sVl0KbR3UdBLUijYZaX3b7Uno43",
+                              data['vendor_id'],
                             ]);
                           })
                         ],

@@ -107,10 +107,12 @@ class CategoryDetails extends StatelessWidget {
                                         .padding(const EdgeInsets.all(12))
                                         .make()
                                         .onTap(() {
-                                      Get.to(ItemDetailScreen(
-                                        title: data[index]['p_name'].toString(),
-                                        data: data[index],
-                                      ));
+                                      controller.checkifFva(data[index]);
+                                      Get.to(() => ItemDetailScreen(
+                                            title: data[index]['p_name']
+                                                .toString(),
+                                            data: data[index],
+                                          ));
                                     });
                                   }))
                         ]),
