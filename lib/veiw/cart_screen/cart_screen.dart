@@ -15,17 +15,6 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(CartController());
     return Scaffold(
-        bottomNavigationBar: SizedBox(
-          height: 60,
-          child: ourButton(
-              color: redColor,
-              onPress: () {
-                Get.to(() => const ShippingDetailScreen());
-              },
-              radiusValue: 0.0,
-              textColor: whiteColor,
-              title: "Proceed To Shipping"),
-        ),
         backgroundColor: whiteColor,
         appBar: AppBar(
           centerTitle: true,
@@ -64,8 +53,8 @@ class CartScreen extends StatelessWidget {
                         return ListTile(
                           leading: Image.network(
                             "${data[index]['img']}",
-                            fit: BoxFit.fill,
-                            width: 100,
+                            fit: BoxFit.cover,
+                            width: 80,
                           ),
                           title:
                               "${data[index]['title']} x${data[index]['qty']}"
@@ -114,6 +103,18 @@ class CartScreen extends StatelessWidget {
                         .roundedSM
                         .make(),
                     10.heightBox,
+                    SizedBox(
+                      height: 60,
+                      width: double.infinity,
+                      child: ourButton(
+                          color: redColor,
+                          onPress: () {
+                            Get.to(() => const ShippingDetailScreen());
+                          },
+                          radiusValue: 10.0,
+                          textColor: whiteColor,
+                          title: "Proceed To Shipping"),
+                    ),
                   ],
                 ),
               );

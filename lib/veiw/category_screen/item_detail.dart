@@ -133,7 +133,7 @@ class ItemDetailScreen extends StatelessWidget {
                           ).onTap(() async {
                             Get.to(() => const ChatScreen(), arguments: [
                               data['p_seller'],
-                              data['vendor_id'],
+                              data['vendorID'],
                             ]);
                           })
                         ],
@@ -337,7 +337,7 @@ class ItemDetailScreen extends StatelessWidget {
                   child: ourButton(
                       radiusValue: 0.0,
                       color: redColor,
-                      onPress: () {
+                      onPress: () async {
                         if (controller.quantity.value < 1) {
                           Get.snackbar(
                               "Add Quantity", "Make sure quantity above 0 ",
@@ -352,6 +352,7 @@ class ItemDetailScreen extends StatelessWidget {
                             color: data['p_colors']
                                 [controller.colorIndex.value],
                             context: context,
+                            vendorID: data['vendorID'],
                             img: data['p_imgs'][0],
                             qty: controller.quantity.value,
                             sellername: data['p_seller'],
