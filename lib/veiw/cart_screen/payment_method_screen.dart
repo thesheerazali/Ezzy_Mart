@@ -24,7 +24,12 @@ class PaymntMethodScreen extends StatelessWidget {
           height: 60,
           child: ourButton(
               color: redColor,
-              onPress: () {},
+              onPress: () {
+                controller.placeMyOrder(
+                    orderPaymentMethod:
+                        paymentMethodListTitle[controller.paymentIndex.value],
+                    totalAmount: controller.totalP.value);
+              },
               radiusValue: 0.0,
               textColor: whiteColor,
               title: "Place My Order"),
