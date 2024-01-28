@@ -49,6 +49,9 @@ class CartController extends GetxController {
       'shipping_method': 'Home Delivery',
       'payment_method': orderPaymentMethod,
       'order_placed': true,
+      'order_confirmed': false,
+      'order_on_delivery': false,
+      'order_deliverd': false,
       'total_amount': totalAmount,
       'orders': FieldValue.arrayUnion(products),
     });
