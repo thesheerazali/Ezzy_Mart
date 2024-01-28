@@ -12,7 +12,7 @@ Widget orderStatus({icon, title, color, showDone}) {
         .padding(const EdgeInsets.all(4))
         .make(),
     trailing: SizedBox(
-      height: 100,
+      // height: 50,
       width: 120,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

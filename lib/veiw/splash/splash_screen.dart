@@ -7,8 +7,6 @@ import 'package:my_mart/veiw/auth/login_Screen.dart';
 import 'package:get/get.dart';
 import 'package:my_mart/veiw/home/home.dart';
 
-import '../../consts/firebase_const.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 

@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/consts/consts.dart';

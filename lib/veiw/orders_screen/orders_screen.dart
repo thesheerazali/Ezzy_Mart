@@ -34,6 +34,11 @@ class OrdersScreen extends StatelessWidget {
               itemCount: data.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  onTap: () => Get.to(
+                    () => OrdersDetails(
+                      data: data[index],
+                    ),
+                  ),
                   leading: '${index + 1}'
                       .text
                       .color(darkFontGrey)
@@ -54,11 +59,7 @@ class OrdersScreen extends StatelessWidget {
                       .fontFamily(bold)
                       .make(),
                   trailing: IconButton(
-                      onPressed: () {
-                        Get.to(() => OrdersDetails(
-                              data: data[index],
-                            ));
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.arrow_forward_ios_rounded)),
                 );
               },
