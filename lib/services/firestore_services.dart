@@ -1,3 +1,4 @@
+import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/firebase_const.dart';
 
 class FireStoreServices {
@@ -69,5 +70,59 @@ class FireStoreServices {
         .collection(chatCollection)
         .where('fromId', isEqualTo: currentUser!.uid)
         .snapshots();
+  }
+
+  // static getCounts() async {
+  //   var res = Future.wait({
+  //     firestore
+  //         .collection(cartCllection)
+  //         .where('added_by', isEqualTo: currentUser!.uid)
+  //         .get()
+  //         .then((value) {
+  //       return value.docs.length;
+  //     }),
+  //     firestore
+  //         .collection(productsCollection)
+  //         .where('p_wishlist', arrayContains: currentUser!.uid)
+  //         .get()
+  //         .then((value) {
+  //       return value.docs.length;
+  //     }),
+  //     firestore
+  //         .collection(orderCollection)
+  //         .where('order_by', isEqualTo: currentUser!.uid)
+  //         .get()
+  //         .then((value) {
+  //       return value.docs.length;
+  //     })
+  //   });
+
+  //   return res;
+  // }
+
+  static Stream<List<int>> getCountsStream() async* {
+    final counts = await Future.wait([
+      firestore
+          .collection(cartCllection)
+          .where('added_by', isEqualTo: currentUser!.uid)
+          .get()
+          .then((value) => value.docs.length),
+      firestore
+          .collection(productsCollection)
+          .where('p_wishlist', arrayContains: currentUser!.uid)
+          .get()
+          .then((value) => value.docs.length),
+      firestore
+          .collection(orderCollection)
+          .where('order_by', isEqualTo: currentUser!.uid)
+          .get()
+          .then((value) => value.docs.length),
+    ]);
+
+    yield counts;
+  }
+
+  static getAllProducts() {
+    return firestore.collection(productsCollection).snapshots();
   }
 }

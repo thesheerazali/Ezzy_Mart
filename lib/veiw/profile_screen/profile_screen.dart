@@ -4,13 +4,14 @@ import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/firebase_const.dart';
 import 'package:my_mart/consts/list.dart';
 import 'package:my_mart/services/firestore_services.dart';
-import 'package:my_mart/veiw/auth/login_Screen.dart';
+import 'package:my_mart/veiw/auth/login_screen.dart';
 import 'package:my_mart/veiw/messages_screen.dart/messages_screen.dart';
 import 'package:my_mart/veiw/orders_screen/orders_screen.dart';
 import 'package:my_mart/veiw/profile_screen/components/detail_cards.dart';
 import 'package:my_mart/veiw/profile_screen/edit_profile_screen.dart';
 import 'package:my_mart/veiw/wishlist_screen/wishlist_screen.dart';
 
+import '../../Common_Widgets/loading_indicator.dart';
 import '../../controllers/profile_controller.dart';
 import '../../utils/toast_message.dart';
 
@@ -118,20 +119,31 @@ class ProfileScreen extends StatelessWidget {
                         ),
 
                         20.heightBox,
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            detailCard(
-                                count: "${data['cart_count']}",
-                                title: "In Your Cart"),
-                            detailCard(
-                                count: "${data['order_count']}",
-                                title: "Your Orders"),
-                            detailCard(
-                                count: "${data['wishlist_count']}",
-                                title: "In Your Wishlish")
-                          ],
+                        StreamBuilder(
+                          stream: FireStoreServices.getCountsStream(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<int>> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Center(child: loadingIndicator());
+                            } else {
+                              var countdata = snapshot.data;
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  detailCard(
+                                      count: "${countdata![0]}",
+                                      title: "In Your Cart"),
+                                  detailCard(
+                                      count: "${countdata[2]}",
+                                      title: "In Your Wishlish"),
+                                  detailCard(
+                                      count: "${countdata[1]}",
+                                      title: "Your Orders"),
+                                ],
+                              );
+                            }
+                          },
                         ),
 
                         //Button Sections
