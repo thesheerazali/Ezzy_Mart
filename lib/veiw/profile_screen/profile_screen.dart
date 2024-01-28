@@ -139,7 +139,7 @@ class ProfileScreen extends StatelessWidget {
                         //Button Sections
 
                         ListView.separated(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   return ListTile(
