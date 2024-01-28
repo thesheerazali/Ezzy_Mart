@@ -8,11 +8,14 @@ import 'package:my_mart/services/firestore_services.dart';
 import 'package:my_mart/veiw/category_screen/item_detail.dart';
 import 'package:my_mart/veiw/home/components/featured_buttons.dart';
 
+import '../../controllers/products_controller.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ProductController());
     return Container(
       padding: const EdgeInsets.all(12),
       color: lightGrey,
@@ -166,38 +169,73 @@ class HomeScreen extends StatelessWidget {
                             10.heightBox,
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Row(
-                                  children: List.generate(
-                                      6,
-                                      (index) => Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Image.asset(imgP1,
-                                                  width: 150,
-                                                  fit: BoxFit.cover),
-                                              10.heightBox,
-                                              "Laptop 4gb/64gb"
-                                                  .text
-                                                  .fontFamily(semibold)
-                                                  .color(darkFontGrey)
-                                                  .make(),
-                                              "\$600"
-                                                  .text
-                                                  .color(redColor)
-                                                  .fontFamily(bold)
-                                                  .size(16)
-                                                  .make()
-                                            ],
-                                          )
-                                              .box
-                                              .margin(
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 4))
-                                              .white
-                                              .roundedSM
-                                              .padding(const EdgeInsets.all(8))
-                                              .make())),
+                              child: FutureBuilder(
+                                  future:
+                                      FireStoreServices.getFeaturedProducts(),
+                                  builder: (context,
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: loadingIndicator(),
+                                      );
+                                    } else if (snapshot.data!.docs.isEmpty) {
+                                      return Center(
+                                        child: "No Featured Product"
+                                            .text
+                                            .white
+                                            .make(),
+                                      );
+                                    } else {
+                                      var featureData = snapshot.data!.docs;
+                                      return Row(
+                                        children: List.generate(
+                                            featureData.length,
+                                            (index) => Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Image.network(
+                                                        featureData[index]
+                                                            ['p_imgs'][0],
+                                                        width: 150,
+                                                        height: 130,
+                                                        fit: BoxFit.cover),
+                                                    10.heightBox,
+                                                    "${featureData[index]['p_name']}"
+                                                        .text
+                                                        .fontFamily(semibold)
+                                                        .color(darkFontGrey)
+                                                        .make(),
+                                                    "${featureData[index]['p_price']}"
+                                                        .numCurrency
+                                                        .text
+                                                        .color(redColor)
+                                                        .fontFamily(bold)
+                                                        .size(16)
+                                                        .make()
+                                                  ],
+                                                )
+                                                    .box
+                                                    .margin(const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 4))
+                                                    .white
+                                                    .roundedSM
+                                                    .padding(
+                                                        const EdgeInsets.all(8))
+                                                    .make()
+                                                    .onTap(() {
+                                                  Get.to(
+                                                    () => ItemDetailScreen(
+                                                      title:
+                                                          "${featureData[index]['p_name']}",
+                                                      data: featureData[index],
+                                                    ),
+                                                  );
+                                                })),
+                                      );
+                                    }
+                                  }),
                             )
                           ]),
                     ),
