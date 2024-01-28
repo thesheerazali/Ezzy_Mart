@@ -44,8 +44,8 @@ class ChatsController extends GetxController {
               'users': {frndId: null, currentId: null},
               'toid': '',
               'fromId': '',
-              'friend_name': '',
-              'sender_name': '',
+              'friend_name': frndName,
+              'sender_name': senderName,
             }).then((value) {
               chatDocId = value.id;
             });
