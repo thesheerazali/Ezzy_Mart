@@ -67,16 +67,17 @@ class Home extends StatelessWidget {
     return await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text("Exit Confirmation"),
-            content: Text("Are you sure you want to exit the application?"),
+            title: const Text("Exit Confirmation"),
+            content:
+                const Text("Are you sure you want to exit the application?"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: Text("No"),
+                child: const Text("No"),
               ),
               TextButton(
                 onPressed: () => SystemNavigator.pop(),
-                child: Text("Yes"),
+                child: const Text("Yes"),
               ),
             ],
           ),

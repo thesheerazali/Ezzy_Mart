@@ -1,5 +1,5 @@
 import 'package:my_mart/consts/consts.dart';
-import 'package:my_mart/veiw/orders_screen/components/order_Status_widget.dart';
+import 'package:my_mart/veiw/orders_screen/components/order_status_widget.dart';
 import 'package:my_mart/veiw/orders_screen/components/order_placed_detail.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -19,7 +19,7 @@ class OrdersDetails extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               orderStatus(

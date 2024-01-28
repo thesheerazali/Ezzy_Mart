@@ -44,7 +44,7 @@ class CategoryScreen extends StatelessWidget {
                         .white
                         .rounded
                         .clip(Clip.antiAlias)
-                        .padding(EdgeInsets.symmetric(horizontal: 4))
+                        .padding(const EdgeInsets.symmetric(horizontal: 4))
                         .outerShadow
                         .make()
                         .onTap(() {
