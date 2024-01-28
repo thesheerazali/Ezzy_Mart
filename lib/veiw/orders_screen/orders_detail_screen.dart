@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/veiw/orders_screen/components/order_status_widget.dart';
 import 'package:my_mart/veiw/orders_screen/components/order_placed_detail.dart';
@@ -99,7 +100,7 @@ class OrdersDetails extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 120,
+                            width: Get.width * .28,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,

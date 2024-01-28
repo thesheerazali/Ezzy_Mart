@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:my_mart/Common_Widgets/bg_widget.dart';
 import 'package:my_mart/consts/consts.dart';
@@ -23,9 +24,10 @@ class ProfileScreen extends StatelessWidget {
     var controller = Get.put(ProfileController());
     return bgWidget(
         child: Scaffold(
-            body: StreamBuilder(
-                stream: FireStoreServices.getUserData(currentUser!.uid),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
+            body: FutureBuilder(
+                future: FireStoreServices.getUserData(currentUser!.uid),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(
@@ -135,10 +137,10 @@ class ProfileScreen extends StatelessWidget {
                                       count: "${countdata![0]}",
                                       title: "In Your Cart"),
                                   detailCard(
-                                      count: "${countdata[2]}",
+                                      count: "${countdata[1]}",
                                       title: "In Your Wishlish"),
                                   detailCard(
-                                      count: "${countdata[1]}",
+                                      count: "${countdata[2]}",
                                       title: "Your Orders"),
                                 ],
                               );

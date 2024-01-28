@@ -21,7 +21,7 @@ class FireStoreServices {
     return firestore
         .collection(usersCollection)
         .where('id', isEqualTo: uid)
-        .snapshots();
+        .get();
   }
 
   static getProducts(category) {
@@ -124,5 +124,12 @@ class FireStoreServices {
 
   static getAllProducts() {
     return firestore.collection(productsCollection).snapshots();
+  }
+
+  static getFeaturedProducts() {
+    return firestore
+        .collection(productsCollection)
+        .where('is_featured', isEqualTo: true)
+        .get();
   }
 }
