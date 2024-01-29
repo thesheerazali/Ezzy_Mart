@@ -4,9 +4,11 @@ import 'package:my_mart/Common_Widgets/home_buttons.dart';
 import 'package:my_mart/Common_Widgets/loading_indicator.dart';
 import 'package:my_mart/consts/consts.dart';
 import 'package:my_mart/consts/list.dart';
+import 'package:my_mart/controllers/home_controller.dart';
 import 'package:my_mart/services/firestore_services.dart';
 import 'package:my_mart/veiw/category_screen/item_detail.dart';
 import 'package:my_mart/veiw/home/components/featured_buttons.dart';
+import 'package:my_mart/veiw/home/search_screen.dart';
 
 import '../../controllers/products_controller.dart';
 
@@ -15,7 +17,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProductController());
+    var controller = Get.put(ProductController());
+    var homeController = Get.find<HomeConteroller>();
     return Container(
       padding: const EdgeInsets.all(12),
       color: lightGrey,
@@ -29,11 +32,21 @@ class HomeScreen extends StatelessWidget {
               // height: 60,
               color: lightGrey,
               child: TextFormField(
-                decoration: const InputDecoration(
+                controller: homeController.searchController,
+                decoration: InputDecoration(
                     border: InputBorder.none,
                     // focusedBorder:
                     //     OutlineInputBorder(borderSide: BorderSide.none),
-                    suffixIcon: Icon(Icons.search),
+                    suffixIcon: Icon(Icons.search).onTap(() {
+                      if (homeController
+                          .searchController.text.isNotEmptyAndNotNull) {
+                        Get.to(() => SearchSreen(
+                            title: homeController.searchController.text));
+                      } else {
+                        VxToast.show(context,
+                            msg: "Write any thing for search");
+                      }
+                    }),
                     filled: true,
                     fillColor: whiteColor,
                     hintText: "Search anything..",
@@ -141,10 +154,12 @@ class HomeScreen extends StatelessWidget {
                               (index) => Column(
                                     children: [
                                       featureButton(
+                                          controller: controller,
                                           icon: featuredImages1[index],
                                           title: featuredTitle1[index]),
                                       10.heightBox,
                                       featureButton(
+                                          controller: controller,
                                           icon: featuredImages2[index],
                                           title: featuredTitle2[index]),
                                     ],

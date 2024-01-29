@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_mart/consts/firebase_const.dart';
 
@@ -12,6 +13,8 @@ class HomeConteroller extends GetxController {
   RxBool canPop = false.obs;
 
   var username = "";
+
+  var searchController = TextEditingController();
 
   getUserName() async {
     var name = await firestore
